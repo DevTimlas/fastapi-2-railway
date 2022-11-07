@@ -5,7 +5,7 @@ import uvicorn
 
 app = FastAPI()
 
-jso = "database.json"
+jso = "./database.json"
 
 @app.get("/")
 async def root():
