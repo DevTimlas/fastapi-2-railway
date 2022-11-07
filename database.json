@@ -1,0 +1,17 @@
+{
+    "blogs": [
+        {
+            "title": "Importance of Breastfeeding",
+            "body": "The aim of this review is to document the advantages of exclusive breastfeeding along with concerns which may hinder the practice of breastfeeding and focuses on the appropriateness of complementary feeding and feeding difficulties which infants encounter. Breastfeeding, as recommended by the World Health Organisation, is the most cost effective way for reducing childhood morbidity such as obesity, hypertension and gastroenteritis as well as mortality. There are several factors that either promote or act as barriers to good infant nutrition. Factors which influence breastfeeding practice in terms of initiation, exclusivity and duration are namely breast engorgement, sore nipples, milk insufficiency and availability of various infant formulas. On the other hand, introduction of complementary foods, also known as weaning, is done around 4 to 6 months and mothers usually should start with home-made nutritious food. Difficulties encountered during the weaning process are often refusal to eat followed by vomiting, colic, allergic reactions and diarrhoea.",
+            "author":"Annonymous",
+            "id": 1
+        },
+
+        {
+            "title": "Importance of Iron in the body",
+            "body": "Iron is an important mineral that helps maintain healthy blood. A lack of iron is called iron-deficiency anemia, which affects about 4-5 million Americans yearly. [1] It is the most common nutritional deficiency worldwide, causing extreme fatigue and lightheadedness. It affects all ages, with children, women who are pregnant or menstruating, and people receiving kidney dialysis among those at highest risk for this condition.",
+            "author":"Annonymous",
+            "id": 2
+        }
+    ]
+}
