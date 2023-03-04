@@ -10,6 +10,17 @@ import os
 
 app = FastAPI()
 
+
+@app.get("/stream")
+async def stream_data():
+    async def generate():
+        for b in range(5):
+            yield f"Dat: {b}\n\n"
+            time.sleep(1)
+    return StreamingResponse(generate(), media_type="text/event-stream")
+
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -33,16 +44,6 @@ async def sse(request):
             await asyncio.sleep(1)
 
     return EventSourceResponse(event_generator())
-
-
-@app.get("/stream")
-async def stream_data():
-    async def generate():
-        for b in range(5):
-            yield f"Dat: {b}\n\n"
-            time.sleep(1)
-    return StreamingResponse(generate(), media_type="text/event-stream")
-
 
 
 if __name__ == '__main__':
