@@ -61,5 +61,5 @@ async def message_stream(request: Request):
     
 if __name__ == '__main__':
 	config = Config()
-	config.bind = ["0.0.0.0:$PORT"]
+	config.bind = ["0.0.0.0:5000"]
 	asyncio.run(serve(app, config))
