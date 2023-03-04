@@ -58,5 +58,3 @@ async def message_stream(request: Request):
 
     return EventSourceResponse(event_generator())
     
-if __name__ == "__main__":
-    hypercorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")
