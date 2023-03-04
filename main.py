@@ -60,4 +60,6 @@ async def message_stream(request: Request):
     return EventSourceResponse(event_generator())
     
 if __name__ == '__main__':
-	asyncio.run(serve(app, Config()))
+	config = Config()
+	config.bind = ["0.0.0.0:$PORT"]
+	asyncio.run(serve(app, config))
