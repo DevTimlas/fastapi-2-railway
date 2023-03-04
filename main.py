@@ -1,90 +1,44 @@
-import os
-from typing import Optional
-from fastapi import FastAPI
-import uvicorn
-import random
-
-app = FastAPI()
-
-@app.get("/")
-def home():
-    return {"Hello": "World from FastAPI"}
-
-# get random number between min(default:0) and max(default:9)
-@app.get("/random/")
-def get_random(min: Optional[int] = 0, max: Optional[int] = 9):
-    rval = random.randint(min, max)
-    return { "value": rval }
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")
-
-
-"""from fastapi import FastAPI, File, UploadFile
-import json
-import os
+from flask import Flask
 import asyncio
 import uvicorn
-from fastapi import FastAPI, Request
-from sse_starlette.sse import EventSourceResponse
+import os
 import hypercorn
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
-app = FastAPI()
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
 
-jso = "./database.json"
+from starlette.applications import Starlette
+from starlette.responses import JSONResponse
+from starlette.routing import Route
+from sse_starlette.sse import EventSourceResponse
 
-@app.get("/")
-async def root():
-	json_data = json.loads(open(jso).read())
-	return json_data
-	
-if __name__ == "__main__":
-	uvicorn.run(app, host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")
-	# config = Config()
-	# config.bind = ["0.0.0.0:5000"]
-	# asyncio.run(serve(app, config))
+starlette_app = Starlette()
+
+@starlette_app.route('/api/data')
+async def get_data(request):
+    data = {'value': 42}
+    return JSONResponse(data)
 
 
-@app.get("/")
-async def root():
-	return {'he':'wrd'}
+async def app(scope, receive, send):
+    await starlette_app(scope, receive, send)
+    
 
-STREAM_DELAY = 1  # second
-RETRY_TIMEOUT = 15000  # milisecond
 
-@app.get('/stream')
-async def message_stream(request: Request):
-    def new_messages():
-        # Add logic here to check for new messages
-        yield 'Hello World'
+@starlette_app.route('/sse')
+async def sse(request):
     async def event_generator():
-        while True:
-            # If client closes connection, stop sending events
-            if await request.is_disconnected():
-                break
-
-            # Checks for new messages and return them to client if any
-            if new_messages():
-            	out = {
-		                    "event": "new_message",
-		                    "id": "message_id",
-		                    "retry": RETRY_TIMEOUT,
-		                    "data": "message_content"
-		            }
-            	# for a, b in test():
-            		# out["Test"] = a
-            		# out['buy/sell'] = b
-            	
-            	yield out 
-
-            await asyncio.sleep(STREAM_DELAY)
+        for i in range(5):
+            yield {'event': 'message', 'data': 'Hello {}'.format(i)}
+            await asyncio.sleep(1)
 
     return EventSourceResponse(event_generator())
-    
+
+
 if __name__ == '__main__':
 	config = Config()
-	config.bind = ["0.0.0.0:5000"]
+	config.bind = ["0.0.0.0:$PORT"]
 	asyncio.run(serve(app, config))
-"""
+
