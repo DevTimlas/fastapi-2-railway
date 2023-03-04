@@ -7,6 +7,9 @@ from sse_starlette.sse import EventSourceResponse
 from starlette.responses import PlainTextResponse
 import uvicorn
 import os
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse, StreamingResponse
+import time
 
 app = FastAPI()
 
@@ -20,7 +23,7 @@ async def stream_data():
     return StreamingResponse(generate(), media_type="text/event-stream")
 
 
-
+"""
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -43,7 +46,7 @@ async def sse(request):
             yield {'event': 'message', 'data': 'Hello {}'.format(i)}
             await asyncio.sleep(1)
 
-    return EventSourceResponse(event_generator())
+    return EventSourceResponse(event_generator())"""
 
 
 if __name__ == '__main__':
