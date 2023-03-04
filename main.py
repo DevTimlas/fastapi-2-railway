@@ -8,7 +8,6 @@ from starlette.responses import PlainTextResponse
 import uvicorn
 import os
 
-
 app = FastAPI()
 
 @app.get("/")
@@ -36,5 +35,35 @@ async def sse(request):
     return EventSourceResponse(event_generator())
 
 
+@app.get("/stream")
+async def stream_data():
+    async def generate():
+        for b in range(5):
+            yield f"Dat: {b}\n\n"
+            time.sleep(1)
+    return StreamingResponse(generate(), media_type="text/event-stream")
+
+
+
 if __name__ == '__main__':
 	uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")
+"""
+
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse, StreamingResponse
+import time
+import uvicorn
+import os
+app = FastAPI()
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+@app.get("/stream")
+async def stream_data():
+    async def generate():
+        for a,b in test():
+            yield f"{a}: {b}\n\n"
+            time.sleep(1)
+    return StreamingResponse(generate(), media_type="text/event-stream")
+if __name__ == '__main__':
+	uvicorn.run("mainraw:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")"""
