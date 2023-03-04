@@ -1,5 +1,0 @@
-name: my-fastapi-app
-env:
-  PYTHONUNBUFFERED: "1"
-  PORT: "8080"
-startupCommand: hypercorn main:app --bind 0.0.0.0:$PORT
