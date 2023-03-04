@@ -23,3 +23,4 @@ urllib3==1.25.10
 uvicorn==0.12.3
 sse_starlette
 anyio
+hypercorn
