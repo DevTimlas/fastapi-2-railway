@@ -58,3 +58,5 @@ async def message_stream(request: Request):
 
     return EventSourceResponse(event_generator())
     
+if __name__ == '__main__':
+	asyncio.run(serve(app, Config()))
